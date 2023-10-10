@@ -17,8 +17,8 @@ public class UploadFileService {
 	
 	public String saveImage(MultipartFile file) throws IOException {
 		if (!file.isEmpty()) {
-			byte [] bytes = file.getBytes();
-			Path path = (Path) Paths.get(folder+file.getOriginalFilename());
+			byte [] bytes=file.getBytes();
+			java.nio.file.Path path =Paths.get(folder+file.getOriginalFilename());
 			Files.write(path, bytes);
 			return file.getOriginalFilename();
 		}
