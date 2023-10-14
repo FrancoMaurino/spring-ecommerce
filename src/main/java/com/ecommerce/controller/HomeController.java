@@ -181,8 +181,8 @@ public class HomeController {
 	@PostMapping("/search")
 	public String searchProduct(@RequestParam String nombre, Model model){
 		LOGGER.info("Nombre del producto: {}", nombre);
-		//trae las coincidencias en minusculas
-		List<Producto> productos = productoService.findAll().stream().filter(p-> p.getNombre().toLowerCase().contains(nombre)).collect(Collectors.toList());
+		//trae busqueda y nombre en minusculas para que coincida
+		List<Producto> productos = productoService.findAll().stream().filter(p-> p.getNombre().toLowerCase().contains(nombre.toLowerCase())).collect(Collectors.toList());
 		model.addAttribute("productos", productos);
 		
 		return "usuario/home";
