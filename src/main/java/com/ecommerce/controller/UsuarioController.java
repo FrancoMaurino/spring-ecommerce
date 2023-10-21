@@ -100,6 +100,12 @@ public class UsuarioController {
 		return "/usuario/detalleCompra";
 	}
 	
+	@GetMapping("/cerrar")
+	public String cerrarSesion(HttpSession session) {
+		session.removeAttribute("idusuario");
+		return "redirect:/";
+	}
+	
 	
 }
 
