@@ -29,7 +29,7 @@ import com.ecommerce.service.IOrdenService;
 import com.ecommerce.service.IUsuarioService;
 import com.ecommerce.service.ProductoService;
 
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/")
