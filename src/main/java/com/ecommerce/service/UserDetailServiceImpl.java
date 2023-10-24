@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,8 +23,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	@Autowired
 	private IUsuarioService usuarioService;
 	
-	@Autowired
-	private BCryptPasswordEncoder bCrypt;
+		
+	@Bean
+	public BCryptPasswordEncoder getEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 	
 	@Autowired
 	HttpSession session;
@@ -39,7 +43,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 			LOGGER.info("esto es el id del usuario: {}", optionalUser.get().getId());
 			session.setAttribute("idusuario", optionalUser.get().getId());
 			Usuario usuario =  optionalUser.get();
-			return User.builder().username(usuario.getNombre()).password(bCrypt.encode(usuario.getPassword())).roles(usuario.getTipo()).build();
+			return User.builder().username(usuario.getNombre()).password(getEncoder().encode(usuario.getPassword())).roles(usuario.getTipo()).build();
 		}else {
 			throw new UsernameNotFoundException("Usuario no encontrado");
 		}
