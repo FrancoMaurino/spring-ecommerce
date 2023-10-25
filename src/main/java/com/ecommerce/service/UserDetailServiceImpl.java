@@ -26,9 +26,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	@Autowired
 	private IUsuarioService usuarioService;
 	
-	@Autowired
-	private BCryptPasswordEncoder bCrypt;
-			
+		
+	@Bean
+	public BCryptPasswordEncoder getEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
 	@Autowired
 	HttpSession session;
 	
@@ -43,7 +46,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 			LOGGER.info("esto es el id del usuario: {}", optionalUser.get().getId());
 			session.setAttribute("idusuario", optionalUser.get().getId());
 			Usuario usuario =  optionalUser.get();
-			return User.builder().username(usuario.getNombre()).password(bCrypt.encode(usuario.getPassword())).roles(usuario.getTipo()).build();
+			return User.builder().username(usuario.getNombre()).password(getEncoder().encode(usuario.getPassword())).roles(usuario.getTipo()).build();
 		}else {
 			throw new UsernameNotFoundException("Usuario no encontrado");
 		}
