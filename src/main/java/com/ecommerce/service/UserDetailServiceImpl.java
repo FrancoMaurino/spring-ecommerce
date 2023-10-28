@@ -2,7 +2,6 @@ package com.ecommerce.service;
 
 import java.util.Optional;
 
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.model.Usuario;
+
+import jakarta.servlet.http.HttpSession;
 
 
 

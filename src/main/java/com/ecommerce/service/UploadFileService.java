@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.criteria.Path;
+import jakarta.persistence.criteria.Path;
 
 @Service
 public class UploadFileService {

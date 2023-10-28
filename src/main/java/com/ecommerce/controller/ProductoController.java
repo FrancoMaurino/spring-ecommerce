@@ -21,7 +21,7 @@ import com.ecommerce.service.ProductoService;
 import com.ecommerce.service.UploadFileService;
 
 import ch.qos.logback.classic.Logger;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/productos")
