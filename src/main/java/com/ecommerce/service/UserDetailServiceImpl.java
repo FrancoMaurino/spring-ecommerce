@@ -40,7 +40,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		LOGGER.info("Esto es el userName");
+		LOGGER.info("dentro del metodo loadByUserName {}", username);
 		Optional<Usuario> optionalUser = usuarioService.findByEmail(username);
 		if (optionalUser.isPresent()) {
 			LOGGER.info("esto es el id del usuario: {}", optionalUser.get().getId());
