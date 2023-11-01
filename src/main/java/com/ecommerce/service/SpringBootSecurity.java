@@ -47,7 +47,7 @@ public class SpringBootSecurity implements WebMvcConfigurer {
             .cors(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(request -> {
                 request.requestMatchers("usuario/acceder").permitAll();// Rutas públicas sin requerir autenticación.
-                request.requestMatchers("/administrador/**").hasAuthority( "ADMIN");// Requiere autorización "ADMIN" para la ruta "/cancion".
+                request.requestMatchers("/administrador/**").hasAuthority( "ADMIN");// Requiere autorización "ADMIN" para la ruta .
                 request.requestMatchers("/productos/**").hasAuthority( "ADMIN");
             }) .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);;
                  
