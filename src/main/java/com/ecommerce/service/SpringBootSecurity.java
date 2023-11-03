@@ -9,17 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-//import org.springframework.security.web.authentication.RememberMeServices;
-//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-//import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
-//import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-//import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import com.ecommerce.service.jwt.JwtFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -31,39 +22,41 @@ public class SpringBootSecurity implements WebMvcConfigurer {
 
 	@Autowired
 	private UserDetailsService userDetailService;
-	
+
 	@Bean
-	public PasswordEncoder passwordEncoder() {
-	    return new BCryptPasswordEncoder();
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+			throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
+
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return userDetailService;
+	}
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+		http.csrf(AbstractHttpConfigurer::disable)
+			.cors(AbstractHttpConfigurer::disable)
+			.authorizeHttpRequests(request -> {
+				//request.requestMatchers("/administrador/**").hasAuthority("ADMIN");																		
+				//request.requestMatchers("/productos/**").hasAuthority("ADMIN");
+				request.requestMatchers("usuario/acceder").permitAll();
+				}).formLogin(formLogin -> formLogin
+						.loginPage("/usuario/login").permitAll()
+						.defaultSuccessUrl("/usuario/acceder"));
+
+		http.cors(withDefaults());
+		return http.build();
+
 	}
 	
-	@Autowired
-	private JwtFilter jwtFilter;
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-             
-         http.csrf(AbstractHttpConfigurer::disable)
-            .cors(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(request -> {
-                request.requestMatchers("usuario/acceder").permitAll();// Rutas públicas sin requerir autenticación.
-                request.requestMatchers("/administrador/**").hasAuthority( "ADMIN");// Requiere autorización "ADMIN" para la ruta .
-                request.requestMatchers("/productos/**").hasAuthority( "ADMIN");
-            }) .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);;
-                 
-                
-         http.cors(withDefaults());
-     return http.build();   
-         
-    }
- 	
-	
-	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
-	    return authenticationConfiguration.getAuthenticationManager();
-	}
 	
 
-		
-	
 }
