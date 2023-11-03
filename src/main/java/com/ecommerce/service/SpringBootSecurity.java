@@ -56,25 +56,7 @@ public class SpringBootSecurity implements WebMvcConfigurer {
      return http.build();   
          
     }
- 
-	/*
-	 * @Bean public SecurityFilterChain securityFilterChain(HttpSecurity http)
-	 * throws Exception {
-	 * 
-	 * http.csrf(AbstractHttpConfigurer::disable)
-	 * .cors(AbstractHttpConfigurer::disable) .formLogin(formLogin -> formLogin
-	 * .loginPage("/usuario/login") .permitAll()
-	 * .defaultSuccessUrl("/usuario/acceder")) .authorizeHttpRequests(request -> {
-	 * 
-	 * request.requestMatchers("/administrador/**").hasAuthority( "ADMIN");
-	 * request.requestMatchers("/productos/**").hasAuthority( "ADMIN");
-	 * 
-	 * });
-	 * 
-	 * http.cors(withDefaults()); return http.build();
-	 * 
-	 * }
-	 */
+ 	
 	
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
