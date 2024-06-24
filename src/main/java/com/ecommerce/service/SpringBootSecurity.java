@@ -45,8 +45,8 @@ public class SpringBootSecurity implements WebMvcConfigurer {
 		http.csrf(AbstractHttpConfigurer::disable)
 			.cors(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(request -> {
-				//request.requestMatchers("/administrador/**").hasAuthority("ADMIN");																		
-				//request.requestMatchers("/productos/**").hasAuthority("ADMIN");
+				request.requestMatchers("/administrador/**").hasAuthority("ADMIN");																		
+				request.requestMatchers("/productos/**").hasAuthority("ADMIN");
 				request.requestMatchers("usuario/acceder").permitAll();
 				}).formLogin(formLogin -> formLogin
 						.loginPage("/usuario/login").permitAll()
